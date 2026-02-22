@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashew - Оплата проезда</title>
+    <!-- Подключаем шрифт Roboto для соответствия дизайну -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Сброс стилей по умолчанию */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5; /* Светло-серый фон страницы */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px; /* Ограничиваем ширину как на мобильном устройстве */
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Шапка (Header) --- */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #ff5722; /* Оранжевый цвет логотипа */
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        /* Белая галочка внутри логотипа */
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 8px;
+            height: 14px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* --- Основной контент (Main Content) --- */
+        main {
+            padding: 24px;
+            flex-grow: 1; /* Занимает все доступное пространство */
+        }
+
+        .qr-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .qr-code-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 24px;
+        }
+
+        .qr-code-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .status-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: #f44336; /* Красный цвет для ошибки */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid white; /* Белая обводка вокруг иконки */
+        }
+
+        .status-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .info-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .info-list li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #757575; /* Серый цвет для заголовков полей */
+            margin-right: 4px;
+        }
+        
+        .info-value {
+            color: #212121;
+        }
+
+        /* --- Подвал (Footer) --- */
+        footer {
+            background-color: #1976d2; /* Синий цвет подвала */
+            color: white;
+            text-align: center;
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 4px 0;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">cashew</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="qr-card">
+                <div class="qr-code-container">
+                    <!-- Используем публичный API для генерации QR-кода -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://cshw.me/example" alt="QR Code" class="qr-code-image">
+                    
+                    <div class="status-icon">
+                        <!-- Иконка крестика (SVG) -->
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <ul class="info-list">
+                    <li>
+                        <span class="info-label">Получатель:</span><br>
+                        <span class="info-value">Оплата проезда в автобусе, гар. номер 11440<br>г. Барановичи<br>Открытое акционерное общество "Автобусный парк г.Барановичи"</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Активен с:</span>
+                        <span class="info-value">30.08.2025 10:43</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Активен до:</span>
+                        <span class="info-value">30.08.2025 11:43</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Описание:</span><br>
+                        <span class="info-value">#54f43155fc08a05d#</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Цена:</span>
+                        <span class="info-value">0.9 BYN</span>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>Cashew</p>
+            <p><a href="mailto:info@cashew.me">info@cashew.me</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
