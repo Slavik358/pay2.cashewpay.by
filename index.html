@@ -4,192 +4,244 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cashew - Оплата проезда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
         
-        .container { 
-            width: 100%; 
-            max-width: 400px; 
-            background-color: white; 
-            display: flex; 
-            flex-direction: column; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        body {
+            font-family: "Open Sans", "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5; /* Цвет фона основного контента */
+            color: rgba(0, 0, 0, .65);
+            font-size: 14px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* ИЗМЕНЕНО: Шапка белая */
-        header { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 16px; 
-            border-bottom: 1px solid #e0e0e0; 
-            background-color: #ffffff;
+        /* HEADER - Белый с тенью */
+        header {
+            background: #fff;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Тень для верхнего блока */
+            z-index: 10;
         }
 
-        .content___21YfC {
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-shadow: 0 2px 8px #f0f1f2;
-    box-shadow: 0 2px 8px #f0f1f2;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-}
-
-        .ant-layout-header {
-    padding: 0;
-    line-height: 58px;
-}
-
-        .logoOffset___C7naQ {
-    -ms-flex: 1 1;
-    flex: 1 1;
-}
-
-        .logoCont___a6vUu {
-    -ms-flex: 2 1;
-    flex: 2 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-    justify-content: center;
-    margin: 5px;
-}
-
-        .backCont___3v1Dd {
-    -ms-flex: 1 1;
-    flex: 1 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    margin-right: 10px;
-}
-
-        
-        .logo { -ms-flex: 2 1;
-    flex: 2 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-    justify-content: center;
-    margin: 5px; }
-        .logo-icon { width: 24px; height: 24px; background-color: #ff5722; border-radius: 50%; position: relative; }
-        .logo-icon::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 8px; height: 14px; border: solid white; border-width: 0 2px 2px 0; }
-        .logo-text { font-size: 20px; font-weight: 500; color: #333; }
-        
-        main { padding: 24px; flex-grow: 1; }
-        .qr-card { background-color: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); padding: 24px; text-align: center; }
-        
-        .qr-code-container { 
-            position: relative; 
-            width: 200px; 
-            height: 200px; 
-            margin: 0 auto 24px; 
-            overflow: hidden; 
-            border-radius: 8px; 
+        .logo-img {
+            height: 32px;
+            width: auto;
         }
 
-        .qr-code-image { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+        /* MAIN CONTENT */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
         }
 
-        .status-icon { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            width: 60px; 
-            height: 60px; 
-            background-color: #f44336; 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            border: 4px solid white; 
-            z-index: 10; 
+        .ticket-card {
+            background: #fff;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-wrap: wrap;
+            /* Увеличенная тень для основного блока */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); 
+            border-radius: 4px;
+            overflow: hidden;
         }
-        .status-icon svg { width: 30px; height: 30px; fill: white; }
-        
-        .info-list { list-style: none; text-align: left; }
-        .info-list li { margin-bottom: 12px; line-height: 1.5; }
-        .info-label { font-weight: 500; color: #757575; margin-right: 4px; }
-        .info-value { color: #212121; white-space: pre-line; }
-        
-        /* ИЗМЕНЕНО: Подвал синий #1890ff */
-        footer { 
-            background-color: #1890ff; 
-            color: white; 
-            text-align: center; 
-            padding: 16px; 
-            font-size: 14px; 
+
+        /* Левая часть с Фото */
+        .qr-section {
+            flex: 1;
+            min-width: 300px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-right: 1px solid #f0f0f0;
+            position: relative;
         }
-        footer p { margin: 4px 0; }
-        footer a { color: white; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
+
+        .qr-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .qr-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        /* Правая часть с информацией */
+        .info-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Стили из твоего примера */
+        .infoBlock___1uMAp {
+            text-align: left;
+        }
+
+        .amountLabel___2dQrA, .descriptionLabel___2OmpC {
+            opacity: .9;
+            font-size: 21px;
+            margin-bottom: 0;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.65);
+            margin-top: 24px;
+        }
+        
+        /* Первый заголовок без отступа сверху */
+        .infoBlock___1uMAp > div:first-child .amountLabel___2dQrA {
+            margin-top: 0;
+        }
+
+        .additionalInf___3nXOK {
+            font-size: 16px;
+            white-space: pre-line;
+            color: #000;
+            font-weight: 600;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .amount___ZlVZj, .description___HgXmR {
+            word-break: break-all;
+            white-space: pre-line;
+            font-size: 19px; /* Базовый размер */
+            color: #000;
+            font-weight: 600;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .description___HgXmR {
+            color: #000;
+        }
+
+        @media (max-width: 991px) {
+            .amount___ZlVZj, .description___HgXmR {
+                font-size: 18px;
+            }
+            .amountLabel___2dQrA, .descriptionLabel___2OmpC {
+                font-size: 18px;
+            }
+        }
+
+        /* FOOTER - Синий #1890ff */
+        footer {
+            background: #1890ff;
+            padding: 24px;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Адаптив для мобильных */
+        @media (max-width: 768px) {
+            .ticket-card {
+                flex-direction: column;
+            }
+            .qr-section {
+                border-right: none;
+                border-bottom: 1px solid #f0f0f0;
+                padding: 24px;
+            }
+            .info-section {
+                padding: 24px;
+            }
+            .qr-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header___1Rwnn ant-layout-header">
-            <div class="content___21YfC">
-                <div class="logoOffset___C7naQ">
-                    
+    <!-- Шапка с новым логотипом -->
+    <header>
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjY0IiBoZWlnaHQ9IjUyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNLjczNSAyNi4yMTJjMCAxNC4xOTQgMTEuNTA3IDI1LjcwMiAyNS43MDMgMjUuNzAyIDE0LjE5NCAwIDI1LjcwMi0xMS41MDggMjUuNzAyLTI1LjcwM0M1Mi4xNCAxMi4wMTggNDAuNjMyLjUxIDI2LjQzNy41MVMuNzM1IDEyLjAxNy43MzUgMjYuMjEyem0xNi4xMDguMTQ3Yy0xLjMyMy0xLjM5Ny0zLjg3Ny0xLjE1Ny0zLjc2Ny43NjQuNDI3IDcuNDQzIDYuODA4IDEzLjEzMSAxNC4yNTIgMTIuNzA0IDcuNDQzLS40MjcgMTMuMTMxLTYuODA3IDEyLjcwNC0xNC4yNTEtLjA3LTEuMjMzLTEuNzA1LTEuMzg0LTIuNDQ3LS4zOTdhMTMuNTYzIDEzLjU2MyAwIDAxLTEwLjA5IDUuNDA3IDEzLjU2MyAxMy41NjMgMCAwMS0xMC42NTItNC4yMjd6IiBmaWxsPSIjRUM1OTMxIi8+PHBhdGggZD0iTTk2Ljg5NSAyMS41ODVjLS4yNS0xLjcxMy0uOTQ2LTIuOTk4LTIuMDg4LTMuODU0LTEuMTA2LS44OTItMi41MTYtMS4zMzgtNC4yMjktMS4zMzgtLjc4NSAwLTEuNjI0LjE0Mi0yLjUxNi40MjgtLjg5Mi4yNS0xLjcxMy43NS0yLjQ2MiAxLjQ5OS0uNzUuNzEzLTEuMzc0IDEuNzMtMS44NzQgMy4wNTEtLjUgMS4yODUtLjc1IDIuOTgtLjc1IDUuMDg1IDAgMS4xNDMuMTI2IDIuMjg1LjM3NSAzLjQyNy4yODYgMS4xNDIuNzE0IDIuMTU5IDEuMjg1IDMuMDVhNy41MDkgNy41MDkgMCAwMDIuMzAyIDIuMTk2Yy45MjguNTM1IDIuMDUyLjgwMyAzLjM3Mi44MDMgMS43ODUgMCAzLjI0OC0uNTU0IDQuMzktMS42NiAxLjE3OC0xLjEwNiAxLjkxLTIuNjU5IDIuMTk1LTQuNjU3aDYuMTAyYy0uNTcxIDMuNjA0LTEuOTQ1IDYuMzctNC4xMjIgOC4yOTctMi4xNCAxLjg5Mi00Ljk5NiAyLjgzNy04LjU2NSAyLjgzNy0yLjE3NyAwLTQuMTA0LS4zNTctNS43ODEtMS4wNy0xLjY0Mi0uNzUtMy4wMzMtMS43NDktNC4xNzUtMi45OTgtMS4xNDItMS4yODUtMi4wMTctMi44MDEtMi42MjMtNC41NS0uNTcyLTEuNzQ5LS44NTctMy42NC0uODU3LTUuNjc1IDAtMi4wNy4yODUtNC4wMTQuODU3LTUuODM0LjU3LTEuODIgMS40MjctMy4zOSAyLjU2OS00LjcxMSAxLjE0Mi0xLjM1NiAyLjU1Mi0yLjQxIDQuMjI5LTMuMTU5IDEuNzEzLS43ODUgMy43MTItMS4xNzcgNS45OTYtMS4xNzcgMS42MDUgMCAzLjEyMi4yMTQgNC41NS42NDIgMS40NjMuMzkzIDIuNzQ4IDEgMy44NTQgMS44MmE5LjcwMSA5LjcwMSAwIDAxMi43ODQgMy4xMDVjLjcxMyAxLjI1IDEuMTQyIDIuNzMgMS4yODQgNC40NDNoLTYuMTAyek0xMzEuMTM3IDMzLjg0NGMwIC43NS4wODkgMS4yODUuMjY3IDEuNjA2LjIxNS4zMi42MDcuNDgxIDEuMTc4LjQ4MWguNjQyYy4yNSAwIC41MzYtLjAzNS44NTctLjEwNnY0LjIyOGMtLjIxNC4wNzItLjUuMTQzLS44NTcuMjE1LS4zMjEuMTA3LS42Ni4xOTYtMS4wMTcuMjY3YTExLjA2IDExLjA2IDAgMDEtMS45OC4yMTRjLTEuMjQ5IDAtMi4yODQtLjI1LTMuMTA1LS43NS0uODIxLS40OTktMS4zNTYtMS4zNzMtMS42MDYtMi42MjItMS4yMTMgMS4xNzctMi43MTIgMi4wMzQtNC40OTcgMi41Ny0xLjc0OC41MzUtMy40NDQuODAyLTUuMDg1LjgwMi0xLjI0OSAwLTIuNDQ1LS4xNzgtMy41ODctLjUzNWE5LjYzNSA5LjYzNSAwIDAxLTMuMDUxLTEuNDQ1IDcuOTY1IDcuOTY1IDAgMDEtMi4wODgtMi41MTZjLS40OTktMS4wMzUtLjc0OS0yLjIzLS43NDktMy41ODcgMC0xLjcxMy4zMDMtMy4xMDUuOTEtNC4xNzUuNjQyLTEuMDcxIDEuNDYzLTEuOTEgMi40NjItMi41MTZhMTAuOTggMTAuOTggMCAwMTMuNDI2LTEuMjg1IDM2LjE3IDM2LjE3IDAgMDEzLjg1NS0uNjQyIDI2LjYzMiAyNi42MzIgMCAwMTMuMTU4LS40MjljLjk5OS0uMTA3IDEuODczLS4yNjcgMi42MjMtLjQ4Mi43ODUtLjIxNCAxLjM5Mi0uNTM1IDEuODItLjk2My40NjQtLjQ2NC42OTYtMS4xNDIuNjk2LTIuMDM0IDAtLjc4NS0uMTk2LTEuNDI4LS41ODktMS45MjdhMy4zMDcgMy4zMDcgMCAwMC0xLjM5Mi0xLjEyNSA0LjkyMyA0LjkyMyAwIDAwLTEuODItLjUzNWMtLjY3OC0uMTA3LTEuMzItLjE2LTEuOTI3LS4xNi0xLjcxMyAwLTMuMTIzLjM1Ny00LjIyOSAxLjA3LTEuMTA2LjcxNC0xLjczMSAxLjgyLTEuODc0IDMuMzJoLTYuMTAyYy4xMDctMS43ODUuNTM1LTMuMjY2IDEuMjg1LTQuNDQ0YTguOTY5IDguOTY5IDAgMDEyLjgzNy0yLjgzN2MxLjE3OC0uNzE0IDIuNDk4LTEuMjEzIDMuOTYxLTEuNDk5YTIzLjQyNSAyMy40MjUgMCAwMTQuNDk3LS40MjhjMS4zNTYgMCAyLjY5NC4xNDMgNC4wMTUuNDI4IDEuMzIuMjg2IDIuNDk4Ljc1IDMuNTMzIDEuMzkyYTcuNTQgNy41NCAwIDAxMi41NjkgMi41MTZjLjY0MyAxIC45NjQgMi4yMy45NjQgMy42OTR2MTQuMjM5em0tNi4xMDMtNy43MDljLS45MjguNjA3LTIuMDcuOTgyLTMuNDI2IDEuMTI0YTM5LjY2MyAzOS42NjMgMCAwMC00LjA2OC41MzZjLS42NDMuMTA3LTEuMjY3LjI2Ny0xLjg3NC40ODFhNC44NTggNC44NTggMCAwMC0xLjYwNi44MDNjLS40NjQuMzIyLS44MzguNzY4LTEuMTI0IDEuMzM5LS4yNS41MzUtLjM3NSAxLjE5NS0uMzc1IDEuOTggMCAuNjc4LjE5NyAxLjI1LjU4OSAxLjcxMy4zOTMuNDY0Ljg1Ny44NCAxLjM5MiAxLjEyNS41NzEuMjUgMS4xNzguNDI4IDEuODIuNTM1LjY3OC4xMDcgMS4yODUuMTYgMS44Mi4xNi42NzggMCAxLjQxLS4wODkgMi4xOTUtLjI2N2E2Ljk3NyA2Ljk3NyAwIDAwMi4xOTUtLjkxIDUuODg2IDUuODg2IDAgMDAxLjc2Ni0xLjYwNmMuNDY0LS42NzguNjk2LTEuNDk5LjY5Ni0yLjQ2M3YtNC41NXpNMTQyLjMwNyAzMS4xMTRjLjE3OCAxLjc4NC44NTYgMy4wMzMgMi4wMzQgMy43NDdzMi41ODcgMS4wNyA0LjIyOSAxLjA3Yy41NzEgMCAxLjIxMy0uMDM1IDEuOTI3LS4xMDZhOS40MTggOS40MTggMCAwMDIuMDg4LS41MzZjLjY0Mi0uMjUgMS4xNi0uNjA3IDEuNTUyLTEuMDcuNDI4LS41LjYyNS0xLjE0Mi41ODktMS45MjgtLjAzNi0uNzg1LS4zMjEtMS40MjctLjg1Ni0xLjkyNy0uNTM2LS41LTEuMjMyLS44OTItMi4wODgtMS4xNzctLjgyMS0uMzIyLTEuNzY3LS41OS0yLjgzNy0uODAzYTEzNS41ODEgMTM1LjU4MSAwIDAxLTMuMjY2LS42OTYgMzIuMzkgMzIuMzkgMCAwMS0zLjMxOS0uOTEgMTEuMTk0IDExLjE5NCAwIDAxLTIuODM3LTEuNDQ2IDYuODYgNi44NiAwIDAxLTEuOTgtMi4zMDJjLS41LS45NjMtLjc1LTIuMTQtLjc1LTMuNTMzIDAtMS40OTguMzU3LTIuNzQ3IDEuMDcxLTMuNzQ3YTguMzY0IDguMzY0IDAgMDEyLjc4My0yLjQ2MiAxMi4wMjQgMTIuMDI0IDAgMDEzLjc0OC0xLjMzOCAyMi40NDYgMjIuNDQ2IDAgMDEzLjk2MS0uMzc1YzEuNDI3IDAgMi43ODMuMTYgNC4wNjguNDgyIDEuMzIxLjI4NSAyLjQ5OC43NjcgMy41MzMgMS40NDVhOC4xNzQgOC4xNzQgMCAwMTIuNjIzIDIuNjc2Yy43MTQgMS4wNzEgMS4xNiAyLjM3NCAxLjMzOSAzLjkwOGgtNi4zNzFjLS4yODUtMS40NjMtLjk2My0yLjQ0NC0yLjAzNC0yLjk0NC0xLjAzNS0uNS0yLjIzLS43NS0zLjU4Ni0uNzVhMTMuNiAxMy42IDAgMDAtMS41NTMuMTA4IDYuNjcyIDYuNjcyIDAgMDAtMS42NTkuNDI4Yy0uNS4xNzgtLjkyOC40NjQtMS4yODUuODU2LS4zNTcuMzU3LS41MzUuODQtLjUzNSAxLjQ0NiAwIC43NS4yNDkgMS4zNTYuNzQ5IDEuODIuNTM1LjQ2NCAxLjIxMy44NTYgMi4wMzQgMS4xNzcuODU3LjI4NiAxLjgyLjUzNiAyLjg5MS43NSAxLjA3MS4yMTQgMi4xNzcuNDQ2IDMuMzE5LjY5NmEzMy45NiAzMy45NiAwIDAxMy4yNjUuOTFjMS4wNzEuMzU3IDIuMDE3LjgzOSAyLjgzNyAxLjQ0NWE2LjY0MyA2LjY0MyAwIDAxMi4wMzUgMi4zMDJjLjUzNS45MjguODAzIDIuMDcuODAzIDMuNDI2IDAgMS42NDItLjM3NSAzLjAzMy0xLjEyNSA0LjE3NWE4Ljc5NCA4Ljc5NCAwIDAxLTIuOTQ0IDIuNzg0Yy0xLjE3Ny43MTQtMi40OTggMS4yMzEtMy45NjEgMS41NTJhMjAuMTggMjAuMTggMCAwMS00LjMzNi40ODJjLTEuNzQ5IDAtMy4zNzMtLjE5Ni00Ljg3MS0uNTg5LTEuNDY0LS4zOTItMi43NDgtLjk4LTMuODU1LTEuNzY2YTkuNDMgOS40MyAwIDAxLTIuNTY5LTIuOTk4Yy0uNjA3LTEuMjEzLS45MjgtMi42NC0uOTY0LTQuMjgyaDYuMTAzek0xNjUuNDYyIDEuNzc5aDYuMTAzdjE0LjE4NWguMTA3Yy43NDktMS4yNDkgMS44NTUtMi4yODQgMy4zMTktMy4xMDQgMS40OTgtLjg1NyAzLjE1OC0xLjI4NSA0Ljk3OC0xLjI4NSAzLjAzMyAwIDUuNDI0Ljc4NSA3LjE3MyAyLjM1NSAxLjc0OSAxLjU3IDIuNjIzIDMuOTI2IDIuNjIzIDcuMDY2VjQwaC02LjEwMlYyMi42MDJjLS4wNzItMi4xNzctLjUzNi0zLjc0Ny0xLjM5Mi00LjcxLS44NTctMS0yLjE5NS0xLjUtNC4wMTUtMS41LTEuMDM1IDAtMS45NjMuMTk3LTIuNzg0LjU5YTUuNjI2IDUuNjI2IDAgMDAtMi4wODcgMS41NTJjLS41NzEuNjQyLTEuMDE3IDEuNDEtMS4zMzkgMi4zMDJhOC4zMTYgOC4zMTYgMCAwMC0uNDgxIDIuODM3VjQwaC02LjEwM1YxLjc3OXpNMjE1LjIwNCAyMy43MjZhOS4yODQgOS4yODQgMCAwMC0uNjQyLTIuNzgzIDYuNTE4IDYuNTE4IDAgMDAtMS4zOTItMi4zMDIgNi4wNTEgNi4wNTEgMCAwMC0yLjE0MS0xLjYwNmMtLjgyMS0uNDI4LTEuNzQ5LS42NDItMi43ODQtLjY0Mi0xLjA3IDAtMi4wNTIuMTk2LTIuOTQ0LjU4OGE2LjUxIDYuNTEgMCAwMC0yLjI0OCAxLjU1MyA4IDggMCAwMC0xLjQ5OSAyLjMwMiA4LjUxOCA4LjUxOCAwIDAwLS41ODkgMi44OWgxNC4yMzl6bS0xNC4yMzkgNC4wMTVjMCAxLjA3LjE0MyAyLjEwNi40MjggMy4xMDUuMzIxIDEgLjc4NSAxLjg3NCAxLjM5MiAyLjYyMy42MDcuNzUgMS4zNzQgMS4zNTYgMi4zMDIgMS44Mi45MjguNDI4IDIuMDM0LjY0MiAzLjMxOS42NDIgMS43ODQgMCAzLjIxMi0uMzc0IDQuMjgyLTEuMTI0IDEuMTA3LS43ODUgMS45MjctMS45NDUgMi40NjMtMy40OGg1Ljc4MWMtLjMyMSAxLjUtLjg3NCAyLjgzOC0xLjY1OSA0LjAxNmExMS45NDMgMTEuOTQzIDAgMDEtMi44MzggMi45OTcgMTIuMDc5IDEyLjA3OSAwIDAxLTMuNzQ3IDEuNzY3IDE0LjEzNSAxNC4xMzUgMCAwMS00LjI4Mi42NDJjLTIuMTc3IDAtNC4xMDQtLjM1Ny01Ljc4Mi0xLjA3LTEuNjc3LS43MTQtMy4xMDQtMS43MTMtNC4yODItMi45OTgtMS4xNDItMS4yODUtMi4wMTYtMi44Mi0yLjYyMy00LjYwNC0uNTcxLTEuNzg0LS44NTctMy43NDctLjg1Ny01Ljg4OCAwLTEuOTYzLjMwNC0zLjgxOS45MS01LjU2Ny42NDMtMS43ODUgMS41MzUtMy4zMzcgMi42NzctNC42NThhMTIuOTIgMTIuOTIgMCAwMTQuMjI5LTMuMjEyYzEuNjQyLS43ODUgMy40OTctMS4xNzcgNS41NjctMS4xNzcgMi4xNzcgMCA0LjEyMi40NjQgNS44MzUgMS4zOTIgMS43NDkuODkyIDMuMTk0IDIuMDg3IDQuMzM2IDMuNTg2IDEuMTQyIDEuNSAxLjk2MyAzLjIzIDIuNDYzIDUuMTkzLjUzNSAxLjkyNy42NzggMy45MjUuNDI4IDUuOTk1aC0yMC4zNDJ6TTIyMy40MyAxMi4zMjRoNi40NzdsNS40MDcgMjAuNjYzaC4xMDdsNS4xOTMtMjAuNjYzaDYuMTU2bDQuOTc4IDIwLjY2M2guMTA3bDUuNjIxLTIwLjY2M2g2LjIxTDI1NS4wMTQgNDBoLTYuMjY0bC01LjEzOS0yMC41NTZoLS4xMDdMMjM4LjQxOSA0MGgtNi40MjRsLTguNTY1LTI3LjY3NnoiIGZpbGw9IiMwMDAiLz48L3N2Zz4=" class="logo-img" alt="Cashew Logo">
+    </header>
+
+    <main>
+        <div class="ticket-card">
+            <!-- Секция с изображением -->
+            <div class="qr-section">
+                <div class="qr-wrapper">
+                    <!-- Загрузка изображения по пути images/photo.png -->
+                    <img id="qr-image" src="images/photo.png" alt="Билет" class="qr-image">
+                    <!-- Крестик удален -->
                 </div>
-                <div class="logoCont___a6vUu">
+            </div>
+
+            <!-- Секция с информацией (Структура как в примере) -->
+            <div class="info-section">
+                <div class="infoBlock___1uMAp">
                     <div>
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjY0IiBoZWlnaHQ9IjUyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNLjczNSAyNi4yMTJjMCAxNC4xOTQgMTEuNTA3IDI1LjcwMiAyNS43MDMgMjUuNzAyIDE0LjE5NCAwIDI1LjcwMi0xMS41MDggMjUuNzAyLTI1LjcwM0M1Mi4xNCAxMi4wMTggNDAuNjMyLjUxIDI2LjQzNy41MVMuNzM1IDEyLjAxNy43MzUgMjYuMjEyem0xNi4xMDguMTQ3Yy0xLjMyMy0xLjM5Ny0zLjg3Ny0xLjE1Ny0zLjc2Ny43NjQuNDI3IDcuNDQzIDYuODA4IDEzLjEzMSAxNC4yNTIgMTIuNzA0IDcuNDQzLS40MjcgMTMuMTMxLTYuODA3IDEyLjcwNC0xNC4yNTEtLjA3LTEuMjMzLTEuNzA1LTEuMzg0LTIuNDQ3LS4zOTdhMTMuNTYzIDEzLjU2MyAwIDAxLTEwLjA5IDUuNDA3IDEzLjU2MyAxMy41NjMgMCAwMS0xMC42NTItNC4yMjd6IiBmaWxsPSIjRUM1OTMxIi8+PHBhdGggZD0iTTk2Ljg5NSAyMS41ODVjLS4yNS0xLjcxMy0uOTQ2LTIuOTk4LTIuMDg4LTMuODU0LTEuMTA2LS44OTItMi41MTYtMS4zMzgtNC4yMjktMS4zMzgtLjc4NSAwLTEuNjI0LjE0Mi0yLjUxNi40MjgtLjg5Mi4yNS0xLjcxMy43NS0yLjQ2MiAxLjQ5OS0uNzUuNzEzLTEuMzc0IDEuNzMtMS44NzQgMy4wNTEtLjUgMS4yODUtLjc1IDIuOTgtLjc1IDUuMDg1IDAgMS4xNDMuMTI2IDIuMjg1LjM3NSAzLjQyNy4yODYgMS4xNDIuNzE0IDIuMTU5IDEuMjg1IDMuMDVhNy41MDkgNy41MDkgMCAwMDIuMzAyIDIuMTk2Yy45MjguNTM1IDIuMDUyLjgwMyAzLjM3Mi44MDMgMS43ODUgMCAzLjI0OC0uNTU0IDQuMzktMS42NiAxLjE3OC0xLjEwNiAxLjkxLTIuNjU5IDIuMTk1LTQuNjU3aDYuMTAyYy0uNTcxIDMuNjA0LTEuOTQ1IDYuMzctNC4xMjIgOC4yOTctMi4xNCAxLjg5Mi00Ljk5NiAyLjgzNy04LjU2NSAyLjgzNy0yLjE3NyAwLTQuMTA0LS4zNTctNS43ODEtMS4wNy0xLjY0Mi0uNzUtMy4wMzMtMS43NDktNC4xNzUtMi45OTgtMS4xNDItMS4yODUtMi4wMTctMi44MDEtMi42MjMtNC41NS0uNTcyLTEuNzQ5LS44NTctMy42NC0uODU3LTUuNjc1IDAtMi4wNy4yODUtNC4wMTQuODU3LTUuODM0LjU3LTEuODIgMS40MjctMy4zOSAyLjU2OS00LjcxMSAxLjE0Mi0xLjM1NiAyLjU1Mi0yLjQxIDQuMjI5LTMuMTU5IDEuNzEzLS43ODUgMy43MTItMS4xNzcgNS45OTYtMS4xNzcgMS42MDUgMCAzLjEyMi4yMTQgNC41NS42NDIgMS40NjMuMzkzIDIuNzQ4IDEgMy44NTQgMS44MmE5LjcwMSA5LjcwMSAwIDAxMi43ODQgMy4xMDVjLjcxMyAxLjI1IDEuMTQyIDIuNzMgMS4yODQgNC40NDNoLTYuMTAyek0xMzEuMTM3IDMzLjg0NGMwIC43NS4wODkgMS4yODUuMjY3IDEuNjA2LjIxNS4zMi42MDcuNDgxIDEuMTc4LjQ4MWguNjQyYy4yNSAwIC41MzYtLjAzNS44NTctLjEwNnY0LjIyOGMtLjIxNC4wNzItLjUuMTQzLS44NTcuMjE1LS4zMjEuMTA3LS42Ni4xOTYtMS4wMTcuMjY3YTExLjA2IDExLjA2IDAgMDEtMS45OC4yMTRjLTEuMjQ5IDAtMi4yODQtLjI1LTMuMTA1LS43NS0uODIxLS40OTktMS4zNTYtMS4zNzMtMS42MDYtMi42MjItMS4yMTMgMS4xNzctMi43MTIgMi4wMzQtNC40OTcgMi41Ny0xLjc0OC41MzUtMy40NDQuODAyLTUuMDg1LjgwMi0xLjI0OSAwLTIuNDQ1LS4xNzgtMy41ODctLjUzNWE5LjYzNSA5LjYzNSAwIDAxLTMuMDUxLTEuNDQ1IDcuOTY1IDcuOTY1IDAgMDEtMi4wODgtMi41MTZjLS40OTktMS4wMzUtLjc0OS0yLjIzLS43NDktMy41ODcgMC0xLjcxMy4zMDMtMy4xMDUuOTEtNC4xNzUuNjQyLTEuMDcxIDEuNDYzLTEuOTEgMi40NjItMi41MTZhMTAuOTggMTAuOTggMCAwMTMuNDI2LTEuMjg1IDM2LjE3IDM2LjE3IDAgMDEzLjg1NS0uNjQyIDI2LjYzMiAyNi42MzIgMCAwMTMuMTU4LS40MjljLjk5OS0uMTA3IDEuODczLS4yNjcgMi42MjMtLjQ4Mi43ODUtLjIxNCAxLjM5Mi0uNTM1IDEuODItLjk2My40NjQtLjQ2NC42OTYtMS4xNDIuNjk2LTIuMDM0IDAtLjc4NS0uMTk2LTEuNDI4LS41ODktMS45MjdhMy4zMDcgMy4zMDcgMCAwMC0xLjM5Mi0xLjEyNSA0LjkyMyA0LjkyMyAwIDAwLTEuODItLjUzNWMtLjY3OC0uMTA3LTEuMzItLjE2LTEuOTI3LS4xNi0xLjcxMyAwLTMuMTIzLjM1Ny00LjIyOSAxLjA3LTEuMTA2LjcxNC0xLjczMSAxLjgyLTEuODc0IDMuMzJoLTYuMTAyYy4xMDctMS43ODUuNTM1LTMuMjY2IDEuMjg1LTQuNDQ0YTguOTY5IDguOTY5IDAgMDEyLjgzNy0yLjgzN2MxLjE3OC0uNzE0IDIuNDk4LTEuMjEzIDMuOTYxLTEuNDk5YTIzLjQyNSAyMy40MjUgMCAwMTQuNDk3LS40MjhjMS4zNTYgMCAyLjY5NC4xNDMgNC4wMTUuNDI4IDEuMzIuMjg2IDIuNDk4Ljc1IDMuNTMzIDEuMzkyYTcuNTQgNy41NCAwIDAxMi41NjkgMi41MTZjLjY0MyAxIC45NjQgMi4yMy45NjQgMy42OTR2MTQuMjM5em0tNi4xMDMtNy43MDljLS45MjguNjA3LTIuMDcuOTgyLTMuNDI2IDEuMTI0YTM5LjY2MyAzOS42NjMgMCAwMC00LjA2OC41MzZjLS42NDMuMTA3LTEuMjY3LjI2Ny0xLjg3NC40ODFhNC44NTggNC44NTggMCAwMC0xLjYwNi44MDNjLS40NjQuMzIyLS44MzguNzY4LTEuMTI0IDEuMzM5LS4yNS41MzUtLjM3NSAxLjE5NS0uMzc1IDEuOTggMCAuNjc4LjE5NyAxLjI1LjU4OSAxLjcxMy4zOTMuNDY0Ljg1Ny44NCAxLjM5MiAxLjEyNS41NzEuMjUgMS4xNzguNDI4IDEuODIuNTM1LjY3OC4xMDcgMS4yODUuMTYgMS44Mi4xNi42NzggMCAxLjQxLS4wODkgMi4xOTUtLjI2N2E2Ljk3NyA2Ljk3NyAwIDAwMi4xOTUtLjkxIDUuODg2IDUuODg2IDAgMDAxLjc2Ni0xLjYwNmMuNDY0LS42NzguNjk2LTEuNDk5LjY5Ni0yLjQ2M3YtNC41NXpNMTQyLjMwNyAzMS4xMTRjLjE3OCAxLjc4NC44NTYgMy4wMzMgMi4wMzQgMy43NDdzMi41ODcgMS4wNyA0LjIyOSAxLjA3Yy41NzEgMCAxLjIxMy0uMDM1IDEuOTI3LS4xMDZhOS40MTggOS40MTggMCAwMDIuMDg4LS41MzZjLjY0Mi0uMjUgMS4xNi0uNjA3IDEuNTUyLTEuMDcuNDI4LS41LjYyNS0xLjE0Mi41ODktMS45MjgtLjAzNi0uNzg1LS4zMjEtMS40MjctLjg1Ni0xLjkyNy0uNTM2LS41LTEuMjMyLS44OTItMi4wODgtMS4xNzctLjgyMS0uMzIyLTEuNzY3LS41OS0yLjgzNy0uODAzYTEzNS41ODEgMTM1LjU4MSAwIDAxLTMuMjY2LS42OTYgMzIuMzkgMzIuMzkgMCAwMS0zLjMxOS0uOTEgMTEuMTk0IDExLjE5NCAwIDAxLTIuODM3LTEuNDQ2IDYuODYgNi44NiAwIDAxLTEuOTgtMi4zMDJjLS41LS45NjMtLjc1LTIuMTQtLjc1LTMuNTMzIDAtMS40OTguMzU3LTIuNzQ3IDEuMDcxLTMuNzQ3YTguMzY0IDguMzY0IDAgMDEyLjc4My0yLjQ2MiAxMi4wMjQgMTIuMDI0IDAgMDEzLjc0OC0xLjMzOCAyMi40NDYgMjIuNDQ2IDAgMDEzLjk2MS0uMzc1YzEuNDI3IDAgMi43ODMuMTYgNC4wNjguNDgyIDEuMzIxLjI4NSAyLjQ5OC43NjcgMy41MzMgMS40NDVhOC4xNzQgOC4xNzQgMCAwMTIuNjIzIDIuNjc2Yy43MTQgMS4wNzEgMS4xNiAyLjM3NCAxLjMzOSAzLjkwOGgtNi4zNzFjLS4yODUtMS40NjMtLjk2My0yLjQ0NC0yLjAzNC0yLjk0NC0xLjAzNS0uNS0yLjIzLS43NS0zLjU4Ni0uNzVhMTMuNiAxMy42IDAgMDAtMS41NTMuMTA4IDYuNjcyIDYuNjcyIDAgMDAtMS42NTkuNDI4Yy0uNS4xNzgtLjkyOC40NjQtMS4yODUuODU2LS4zNTcuMzU3LS41MzUuODQtLjUzNSAxLjQ0NiAwIC43NS4yNDkgMS4zNTYuNzQ5IDEuODIuNTM1LjQ2NCAxLjIxMy44NTYgMi4wMzQgMS4xNzcuODU3LjI4NiAxLjgyLjUzNiAyLjg5MS43NSAxLjA3MS4yMTQgMi4xNzcuNDQ2IDMuMzE5LjY5NmEzMy45NiAzMy45NiAwIDAxMy4yNjUuOTFjMS4wNzEuMzU3IDIuMDE3LjgzOSAyLjgzNyAxLjQ0NWE2LjY0MyA2LjY0MyAwIDAxMi4wMzUgMi4zMDJjLjUzNS45MjguODAzIDIuMDcuODAzIDMuNDI2IDAgMS42NDItLjM3NSAzLjAzMy0xLjEyNSA0LjE3NWE4Ljc5NCA4Ljc5NCAwIDAxLTIuOTQ0IDIuNzg0Yy0xLjE3Ny43MTQtMi40OTggMS4yMzEtMy45NjEgMS41NTJhMjAuMTggMjAuMTggMCAwMS00LjMzNi40ODJjLTEuNzQ5IDAtMy4zNzMtLjE5Ni00Ljg3MS0uNTg5LTEuNDY0LS4zOTItMi43NDgtLjk4LTMuODU1LTEuNzY2YTkuNDMgOS40MyAwIDAxLTIuNTY5LTIuOTk4Yy0uNjA3LTEuMjEzLS45MjgtMi42NC0uOTY0LTQuMjgyaDYuMTAzek0xNjUuNDYyIDEuNzc5aDYuMTAzdjE0LjE4NWguMTA3Yy43NDktMS4yNDkgMS44NTUtMi4yODQgMy4zMTktMy4xMDQgMS40OTgtLjg1NyAzLjE1OC0xLjI4NSA0Ljk3OC0xLjI4NSAzLjAzMyAwIDUuNDI0Ljc4NSA3LjE3MyAyLjM1NSAxLjc0OSAxLjU3IDIuNjIzIDMuOTI2IDIuNjIzIDcuMDY2VjQwaC02LjEwMlYyMi42MDJjLS4wNzItMi4xNzctLjUzNi0zLjc0Ny0xLjM5Mi00LjcxLS44NTctMS0yLjE5NS0xLjUtNC4wMTUtMS41LTEuMDM1IDAtMS45NjMuMTk3LTIuNzg0LjU5YTUuNjI2IDUuNjI2IDAgMDAtMi4wODcgMS41NTJjLS41NzEuNjQyLTEuMDE3IDEuNDEtMS4zMzkgMi4zMDJhOC4zMTYgOC4zMTYgMCAwMC0uNDgxIDIuODM3VjQwaC02LjEwM1YxLjc3OXpNMjE1LjIwNCAyMy43MjZhOS4yODQgOS4yODQgMCAwMC0uNjQyLTIuNzgzIDYuNTE4IDYuNTE4IDAgMDAtMS4zOTItMi4zMDIgNi4wNTEgNi4wNTEgMCAwMC0yLjE0MS0xLjYwNmMtLjgyMS0uNDI4LTEuNzQ5LS42NDItMi43ODQtLjY0Mi0xLjA3IDAtMi4wNTIuMTk2LTIuOTQ0LjU4OGE2LjUxIDYuNTEgMCAwMC0yLjI0OCAxLjU1MyA4IDggMCAwMC0xLjQ5OSAyLjMwMiA4LjUxOCA4LjUxOCAwIDAwLS41ODkgMi44OWgxNC4yMzl6bS0xNC4yMzkgNC4wMTVjMCAxLjA3LjE0MyAyLjEwNi40MjggMy4xMDUuMzIxIDEgLjc4NSAxLjg3NCAxLjM5MiAyLjYyMy42MDcuNzUgMS4zNzQgMS4zNTYgMi4zMDIgMS44Mi45MjguNDI4IDIuMDM0LjY0MiAzLjMxOS42NDIgMS43ODQgMCAzLjIxMi0uMzc0IDQuMjgyLTEuMTI0IDEuMTA3LS43ODUgMS45MjctMS45NDUgMi40NjMtMy40OGg1Ljc4MWMtLjMyMSAxLjUtLjg3NCAyLjgzOC0xLjY1OSA0LjAxNmExMS45NDMgMTEuOTQzIDAgMDEtMi44MzggMi45OTcgMTIuMDc5IDEyLjA3OSAwIDAxLTMuNzQ3IDEuNzY3IDE0LjEzNSAxNC4xMzUgMCAwMS00LjI4Mi42NDJjLTIuMTc3IDAtNC4xMDQtLjM1Ny01Ljc4Mi0xLjA3LTEuNjc3LS43MTQtMy4xMDQtMS43MTMtNC4yODItMi45OTgtMS4xNDItMS4yODUtMi4wMTYtMi44Mi0yLjYyMy00LjYwNC0uNTcxLTEuNzg0LS44NTctMy43NDctLjg1Ny01Ljg4OCAwLTEuOTYzLjMwNC0zLjgxOS45MS01LjU2Ny42NDMtMS43ODUgMS41MzUtMy4zMzcgMi42NzctNC42NThhMTIuOTIgMTIuOTIgMCAwMTQuMjI5LTMuMjEyYzEuNjQyLS43ODUgMy40OTctMS4xNzcgNS41NjctMS4xNzcgMi4xNzcgMCA0LjEyMi40NjQgNS44MzUgMS4zOTIgMS43NDkuODkyIDMuMTk0IDIuMDg3IDQuMzM2IDMuNTg2IDEuMTQyIDEuNSAxLjk2MyAzLjIzIDIuNDYzIDUuMTkzLjUzNSAxLjkyNy42NzggMy45MjUuNDI4IDUuOTk1aC0yMC4zNDJ6TTIyMy40MyAxMi4zMjRoNi40NzdsNS40MDcgMjAuNjYzaC4xMDdsNS4xOTMtMjAuNjYzaDYuMTU2bDQuOTc4IDIwLjY2M2guMTA3bDUuNjIxLTIwLjY2M2g2LjIxTDI1NS4wMTQgNDBoLTYuMjY0bC01LjEzOS0yMC41NTZoLS4xMDdMMjM4LjQxOSA0MGgtNi40MjRsLTguNTY1LTI3LjY3NnoiIGZpbGw9IiMwMDAiLz48L3N2Zz4=" class="logo___3lfGx">
+                        <h2 class="amountLabel___2dQrA">Получатель:</h2>
                     </div>
+                    <h2 id="recipient" class="additionalInf___3nXOK">Загрузка...</h2>
+
+                    <div>
+                        <h2 class="amountLabel___2dQrA">Активен с:</h2>
+                    </div>
+                    <h2 id="active-from" class="amount___ZlVZj">--</h2>
+
+                    <div>
+                        <h2 class="amountLabel___2dQrA">Активен до:</h2>
+                    </div>
+                    <h2 id="active-to" class="amount___ZlVZj">--</h2>
+
+                    <div>
+                        <h2 class="descriptionLabel___2OmpC">Описание:</h2>
+                    </div>
+                    <h2 id="description" class="description___HgXmR">--</h2>
+
+                    <div>
+                        <h2 class="amountLabel___2dQrA">Цена:</h2>
+                    </div>
+                    <h2 id="price" class="amount___ZlVZj">--</h2>
                 </div>
-            <div class="backCont___3v1Dd">
-                
             </div>
         </div>
-        </div>
+    </main>
 
-        <main>
-            <div class="qr-card">
-                <div class="qr-code-container">
-                    <!-- Убедись, что файл photo.jpg лежит рядом с этим HTML файлом -->
-                    <img id="qr-image" src="photo.jpg" alt="Фото пользователя" class="qr-code-image">
-                </div>
-
-                <ul class="info-list">
-                    <li>
-                        <span class="info-label">Получатель:</span><br>
-                        <span id="recipient" class="info-value">Загрузка...</span>
-                    </li>
-                    <li>
-                        <span class="info-label">Активен с:</span>
-                        <span id="active-from" class="info-value">--</span>
-                    </li>
-                    <li>
-                        <span class="info-label">Активен до:</span>
-                        <span id="active-to" class="info-value">--</span>
-                    </li>
-                    <li>
-                        <span class="info-label">Описание:</span><br>
-                        <span id="description" class="info-value">--</span>
-                    </li>
-                    <li>
-                        <span class="info-label">Цена:</span>
-                        <span id="price" class="info-value">--</span>
-                    </li>
-                </ul>
-            </div>
-        </main>
-
-        <footer>
-            <p>Cashew</p>
-            <p><a href="mailto:info@cashew.me">info@cashew.me</a></p>
-        </footer>
-    </div>
+    <footer>
+        <div>Cashew</div>
+        <div><a href="mailto:info@cashew.me">info@cashew.me</a></div>
+    </footer>
 
     <script>
         function getParam(name) {
@@ -210,16 +262,14 @@
         function addOneHour(timeString) {
             if (!timeString) return "--";
             
-            // Пробуем распарсить дату. Формат зависит от того, что шлет Android.
-            // Обычно это "dd.MM.yyyy HH:mm" или ISO строка.
-            // Попробуем универсальный способ замены точек на слеши для парсинга в JS
+            // Пробуем распарсить дату. Ожидаем формат dd.MM.yyyy HH:mm
             let cleanString = timeString.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$2/$1/$3');
             
             let date = new Date(cleanString);
             
-            // Если дата невалидна, пробуем как есть (вдруг ISO)
+            // Если дата невалидна, возвращаем как есть
             if (isNaN(date.getTime())) {
-                return timeString; // Возвращаем как есть, если не смогли распарсить
+                return timeString;
             }
 
             // Добавляем 1 час
@@ -238,7 +288,6 @@
         window.onload = function() {
             const recipient = getParam('recipient');
             const activeFrom = getParam('activeFrom');
-            // activeTo мы теперь игнорируем из параметров и считаем сами
             const description = getParam('description');
             const price = getParam('price');
 
@@ -259,5 +308,3 @@
     </script>
 </body>
 </html>
-
-
