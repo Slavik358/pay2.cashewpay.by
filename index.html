@@ -6,15 +6,33 @@
     <title>Cashew - Оплата проезда</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* Стили остаются без изменений */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Roboto', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
-        .container { width: 100%; max-width: 400px; background-color: white; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-        header { display: flex; align-items: center; justify-content: center; padding: 16px; border-bottom: 1px solid #e0e0e0; }
+        
+        .container { 
+            width: 100%; 
+            max-width: 400px; 
+            background-color: white; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        }
+
+        /* ИЗМЕНЕНО: Шапка белая */
+        header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 16px; 
+            border-bottom: 1px solid #e0e0e0; 
+            background-color: #ffffff;
+        }
+
         .logo { display: flex; align-items: center; gap: 8px; }
         .logo-icon { width: 24px; height: 24px; background-color: #ff5722; border-radius: 50%; position: relative; }
         .logo-icon::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 8px; height: 14px; border: solid white; border-width: 0 2px 2px 0; }
         .logo-text { font-size: 20px; font-weight: 500; color: #333; }
+        
         main { padding: 24px; flex-grow: 1; }
         .qr-card { background-color: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); padding: 24px; text-align: center; }
         
@@ -23,15 +41,14 @@
             width: 200px; 
             height: 200px; 
             margin: 0 auto 24px; 
-            /* Добавил overflow:hidden, чтобы фото не вылезало за круг, если нужно, или уберите это свойство, если фото должно быть квадратным внутри контейнера */
             overflow: hidden; 
-            border-radius: 8px; /* Скругление углов под стиль карточки */
+            border-radius: 8px; 
         }
 
         .qr-code-image { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Важно: заполняет область, обрезая лишнее, чтобы не было искажений */
+            object-fit: cover; 
         }
 
         .status-icon { 
@@ -47,14 +64,23 @@
             justify-content: center; 
             align-items: center; 
             border: 4px solid white; 
-            z-index: 10; /* Чтобы иконка была поверх фото */
+            z-index: 10; 
         }
         .status-icon svg { width: 30px; height: 30px; fill: white; }
+        
         .info-list { list-style: none; text-align: left; }
         .info-list li { margin-bottom: 12px; line-height: 1.5; }
         .info-label { font-weight: 500; color: #757575; margin-right: 4px; }
         .info-value { color: #212121; white-space: pre-line; }
-        footer { background-color: #1976d2; color: white; text-align: center; padding: 16px; font-size: 14px; }
+        
+        /* ИЗМЕНЕНО: Подвал синий #1890ff */
+        footer { 
+            background-color: #1890ff; 
+            color: white; 
+            text-align: center; 
+            padding: 16px; 
+            font-size: 14px; 
+        }
         footer p { margin: 4px 0; }
         footer a { color: white; text-decoration: none; }
         footer a:hover { text-decoration: underline; }
@@ -73,7 +99,7 @@
         <main>
             <div class="qr-card">
                 <div class="qr-code-container">
-                    <!-- ИЗМЕНЕНО: В src указано имя файла. Замените photo.jpg на ваше название -->
+                    <!-- Убедись, что файл photo.jpg лежит рядом с этим HTML файлом -->
                     <img id="qr-image" src="photo.jpg" alt="Фото пользователя" class="qr-code-image">
                     
                     <div class="status-icon">
@@ -120,35 +146,62 @@
 
         function decode(text) {
             if (!text) return "";
-            return decodeURIComponent(text);
+            try {
+                return decodeURIComponent(text);
+            } catch (e) {
+                return text;
+            }
+        }
+
+        // Функция для добавления 1 часа к строке времени
+        function addOneHour(timeString) {
+            if (!timeString) return "--";
+            
+            // Пробуем распарсить дату. Формат зависит от того, что шлет Android.
+            // Обычно это "dd.MM.yyyy HH:mm" или ISO строка.
+            // Попробуем универсальный способ замены точек на слеши для парсинга в JS
+            let cleanString = timeString.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$2/$1/$3');
+            
+            let date = new Date(cleanString);
+            
+            // Если дата невалидна, пробуем как есть (вдруг ISO)
+            if (isNaN(date.getTime())) {
+                return timeString; // Возвращаем как есть, если не смогли распарсить
+            }
+
+            // Добавляем 1 час
+            date.setHours(date.getHours() + 1);
+
+            // Форматируем обратно в dd.MM.yyyy HH:mm
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let year = date.getFullYear();
+            let hours = String(date.getHours()).padStart(2, '0');
+            let minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${day}.${month}.${year} ${hours}:${minutes}`;
         }
 
         window.onload = function() {
-            // Заполняем текстовые данные (это оставляем)
             const recipient = getParam('recipient');
             const activeFrom = getParam('activeFrom');
-            const activeTo = getParam('activeTo');
+            // activeTo мы теперь игнорируем из параметров и считаем сами
             const description = getParam('description');
             const price = getParam('price');
-            
-            // Параметр qrData нам больше не нужен для картинки, но можно оставить для других целей
-            // const qrData = getParam('qrData'); 
 
             if (recipient) document.getElementById('recipient').innerText = decode(recipient);
-            if (activeFrom) document.getElementById('active-from').innerText = decode(activeFrom);
-            if (activeTo) document.getElementById('active-to').innerText = decode(activeTo);
+            
+            if (activeFrom) {
+                const decodedStart = decode(activeFrom);
+                document.getElementById('active-from').innerText = decodedStart;
+                
+                // Рассчитываем время окончания (+1 час)
+                const calculatedEnd = addOneHour(decodedStart);
+                document.getElementById('active-to').innerText = calculatedEnd;
+            }
+
             if (description) document.getElementById('description').innerText = decode(description);
             if (price) document.getElementById('price').innerText = decode(price);
-
-            // ИЗМЕНЕНО: Блок кода, который менял картинку на QR, удален/закомментирован.
-            // Теперь картинка всегда берется из атрибута src в HTML (ваше фото).
-            
-            /* 
-            if (qrData) {
-                const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(decode(qrData));
-                document.getElementById('qr-image').src = qrUrl;
-            }
-            */
         };
     </script>
 </body>
