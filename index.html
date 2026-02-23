@@ -3,294 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cashew - Оплата проезда</title>
-    <!-- Подключаем шрифт Open Sans, как в оригинале -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Билет Cashew - Оплата проезда</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        /* Подключение шрифтов */
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-stretch: 100%;
+            src: url(https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSKmu1aB.woff2) format('woff2');
+            unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+        }
+
+        /* Сброс и базовые стили */
+        *, :after, :before {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: "Open Sans", "Segoe UI", Roboto, sans-serif;
-            background-color: #fff; /* Белый фон как в оригинале */
-            color: rgba(0, 0, 0, .65);
-            font-size: 14px;
+            margin: 0;
+            font-family: "Open Sans", "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 19px;
+            font-variant: tabular-nums;
             line-height: 1.5;
+            color: rgba(0, 0, 0, .65);
+            background-color: #fff;
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -ms-overflow-style: scrollbar;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        ::selection {
+            background: #1890ff;
+            color: #fff;
+        }
+
+        /* Layout Structure */
+        .ant-layout, .ant-layout * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .ant-layout {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* HEADER */
-        header {
-            background: #001529; /* Темная шапка как в оригинале */
-            padding: 0 24px;
+        .ant-layout-header {
+            background: #001529;
+            padding: 0 50px;
             height: 64px;
+            line-height: 64px;
+        }
+
+        .ant-layout-content {
+            flex: 1;
+        }
+
+        .ant-layout-footer {
+            background: #f0f2f5;
+            padding: 24px 50px;
+        }
+
+        /* Custom Classes from snippet */
+        .wrapper___YPV7U {
             display: flex;
-            align-items: center;
-            justify-content: center; /* Центрируем лого */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header___1Rwnn {
+            height: auto;
+            line-height: 0;
+            padding: 0;
+            min-width: 305px;
             z-index: 10;
+            background: #001529; /* Fallback */
         }
 
-        .logo-container {
+        .content___21YfC {
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-shadow: 0 2px 8px #f0f1f2;
+            box-shadow: 0 2px 8px #f0f1f2;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            height: 64px;
+            padding: 0 50px;
+        }
+
+        .logoCont___a6vUu {
             display: flex;
             align-items: center;
-            gap: 12px;
         }
 
-        .logo-svg {
-            height: 32px; /* Размер логотипа */
+        .logo___3lfGx {
+            height: 32px; /* Adjust based on typical header logo size */
             width: auto;
         }
 
-        /* MAIN CONTENT */
-        main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            background-color: #f0f2f5; /* Светло-серый фон под карточкой */
+        .content___11TYE {
+            padding: 24px 0;
+            background: #fff;
         }
 
-        .ticket-card {
+        .content___2Zzv5 {
+            margin: 0 auto;
+        }
+
+        /* Form and Ticket Styles */
+        .form___1Pz19 {
             background: #fff;
-            width: 100%;
-            max-width: 900px;
+        }
+
+        /* Grid System Simulation (Ant Design like) */
+        .ant-row-flex {
             display: flex;
             flex-wrap: wrap;
-            box-shadow: 0 2px 8px #f0f1f2;
-            border-radius: 4px;
-            overflow: hidden;
+            margin-left: -8px;
+            margin-right: -8px;
         }
 
-        /* Левая часть с QR/Фото */
-        .qr-section {
-            flex: 1;
-            min-width: 300px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            border-right: 1px solid #f0f0f0;
+        .ant-col-xs-24 {
             position: relative;
-        }
-
-        .qr-wrapper {
-            position: relative;
-            width: 260px;
-            height: 260px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            padding: 10px;
-            border-radius: 4px;
-        }
-
-        .qr-image {
+            min-height: 1px;
+            padding-left: 8px;
+            padding-right: 8px;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 2px;
         }
 
-        /* Красный крестик статуса */
-        .status-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            background-color: #c93636; /* Цвет как в оригинале */
-            border-radius: 50%;
+        @media (min-width: 768px) {
+            .ant-col-md-24 {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .ant-col-lg-12 {
+                width: 50%;
+            }
+            .ant-col-lg-24 {
+                width: 100%;
+            }
+        }
+
+        /* QR Block */
+        .qrCont___3gWPa {
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            z-index: 5;
+            padding: 20px;
         }
 
-        .status-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
+        .qrBlock___ngXsb {
+            position: relative;
+            text-align: center;
         }
 
-        /* Правая часть с информацией */
-        .info-section {
-            flex: 1;
-            min-width: 300px;
-            padding: 40px;
+        .cancel___1ZlPJ {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: none; /* Hidden by default, shown if needed via JS */
+        }
+
+        /* Info Block */
+        .infoCont___2XI7s {
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        .info-row {
-            margin-bottom: 24px;
-        }
-
-        .info-label {
-            font-size: 14px;
-            color: rgba(0, 0, 0, 0.65);
-            margin-bottom: 8px;
-            font-weight: 400;
-        }
-
-        .info-value {
-            font-size: 19px; /* Крупный шрифт как в оригинале */
-            color: #000;
+        .infoBlock___1uMAp h2 {
+            margin: 10px 0;
             font-weight: 600;
-            line-height: 1.4;
-            white-space: pre-line; /* Сохраняет переносы строк */
-        }
-        
-        /* Особый стиль для цены, чтобы выделялась */
-        .price-value {
-            color: #1890ff; /* Синий акцент для цены, опционально */
         }
 
-        /* FOOTER */
-        footer {
-            background: #fff;
-            padding: 24px;
+        .amountLabel___2dQrA, .descriptionLabel___2OmpC {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.45);
+            margin-bottom: 4px !important;
+            font-weight: normal;
+        }
+
+        .additionalInf___3nXOK, .amount___ZlVZj, .description___HgXmR {
+            font-size: 20px;
+            color: rgba(0, 0, 0, 0.85);
+            margin-top: 4px !important;
+        }
+
+        .description___HgXmR {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Footer */
+        .footer___3-nlc {
             text-align: center;
-            border-top: 1px solid #f0f0f0;
+            color: rgba(0,0,0,0.45);
             font-size: 14px;
-            color: rgba(0,0,0,0.65);
         }
 
-        footer a {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .email___1juwC {
             color: #1890ff;
             text-decoration: none;
-            margin-left: 8px;
         }
-        footer a:hover {
+        
+        .email___1juwC:hover {
             text-decoration: underline;
         }
 
-        /* Адаптив для мобильных */
-        @media (max-width: 768px) {
-            .ticket-card {
-                flex-direction: column;
-            }
-            .qr-section {
-                border-right: none;
-                border-bottom: 1px solid #f0f0f0;
-                padding: 24px;
-            }
-            .info-section {
-                padding: 24px;
-            }
-            .qr-wrapper {
-                width: 200px;
-                height: 200px;
-            }
+        /* Utility for canvas */
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка с настоящим лого -->
-    <header>
-        <div class="logo-container">
-            <!-- Вставлен оригинальный SVG логотип Cashew -->
-            <svg class="logo-svg" viewBox="0 0 264 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M.735 26.212c0 14.194 11.507 25.702 25.703 25.702 14.194 0 25.702-11.508 25.702-25.703C52.14 12.018 40.632.51 26.437.51S.735 12.017.735 26.212zm16.108.147c-1.323-1.397-3.877-1.157-3.767.764.427 7.443 6.808 13.131 14.252 12.704 7.443-.427 13.131-6.807 12.704-14.251-.07-1.233-1.705-1.384-2.447-.397a13.563 13.563 0 01-10.09 5.407 13.563 13.563 0 01-10.652-4.227z" fill="#EC5931"/>
-                <path d="M96.895 21.585c-.25-1.713-.946-2.998-2.088-3.854-1.106-.892-2.516-1.338-4.229-1.338-.785 0-1.624.142-2.516.428-.892.25-1.713.75-2.462 1.499-.75.713-1.374 1.73-1.874 3.051-.5 1.285-.75 2.98-.75 5.085 0 1.143.126 2.285.375 3.427.286 1.142.714 2.159 1.285 3.05a7.509 7.509 0 002.302 2.196c.928.535 2.052.803 3.372.803 1.785 0 3.248-.554 4.39-1.66 1.178-1.106 1.91-2.659 2.195-4.657h6.102c-.571 3.604-1.945 6.37-4.122 8.297-2.14 1.892-4.996 2.837-8.565 2.837-2.177 0-4.104-.357-5.781-1.07-1.642-.75-3.033-1.749-4.175-2.998-1.142-1.285-2.017-2.801-2.623-4.55-.572-1.749-.857-3.64-.857-5.675 0-2.07.285-4.014.857-5.834.57-1.82 1.427-3.39 2.569-4.711 1.142-1.356 2.552-2.41 4.229-3.159 1.713-.785 3.712-1.177 5.996-1.177 1.605 0 3.122.214 4.55.642 1.463.393 2.748 1 3.854 1.82a9.701 9.701 0 012.784 3.105c.713 1.25 1.142 2.73 1.284 4.443h-6.102zM131.137 33.844c0 .75.089 1.285.267 1.606.215.32.607.481 1.178.481h.642c.25 0 .536-.035.857-.106v4.228c-.214.072-.5.143-.857.215-.321.107-.66.196-1.017.267a11.06 11.06 0 01-1.98.214c-1.249 0-2.284-.25-3.105-.75-.821-.499-1.356-1.373-1.606-2.622-1.213 1.177-2.712 2.034-4.497 2.57-1.748.535-3.444.802-5.085.802-1.249 0-2.445-.178-3.587-.535a9.635 9.635 0 01-3.051-1.445 7.965 7.965 0 01-2.088-2.516c-.499-1.035-.749-2.23-.749-3.587 0-1.713.303-3.105.91-4.175.642-1.071 1.463-1.91 2.462-2.516a10.98 10.98 0 013.426-1.285 36.17 36.17 0 013.855-.642 26.632 26.632 0 013.158-.429c.999-.107 1.873-.267 2.623-.482.785-.214 1.392-.535 1.82-.963.464-.464.696-1.142.696-2.034 0-.785-.196-1.428-.589-1.927a3.307 3.307 0 00-1.392-1.125 4.923 4.923 0 00-1.82-.535c-.678-.107-1.32-.16-1.927-.16-1.713 0-3.123.357-4.229 1.07-1.106.714-1.731 1.82-1.874 3.32h-6.102c.107-1.785.535-3.266 1.285-4.444a8.969 8.969 0 012.837-2.837c1.178-.714 2.498-1.213 3.961-1.499a23.425 23.425 0 014.497-.428c1.356 0 2.694.143 4.015.428 1.32.286 2.498.75 3.533 1.392a7.54 7.54 0 012.569 2.516c.643 1 .964 2.23.964 3.694v14.239zm-6.103-7.709c-.928.607-2.07.982-3.426 1.124a39.663 39.663 0 00-4.068.536c-.643.107-1.267.267-1.874.481a4.858 4.858 0 00-1.606.803c-.464.322-.838.768-1.124 1.339-.25.535-.375 1.195-.375 1.98 0 .678.197 1.25.589 1.713.393.464.857.84 1.392 1.125.571.25 1.178.428 1.82.535.678.107 1.285.16 1.82.16.678 0 1.41-.089 2.195-.267a6.977 6.977 0 002.195-.91 5.886 5.886 0 001.766-1.606c.464-.678.696-1.499.696-2.463v-4.55zM142.307 31.114c.178 1.784.856 3.033 2.034 3.747s2.587 1.07 4.229 1.07c.571 0 1.213-.035 1.927-.106a9.418 9.418 0 002.088-.536c.642-.25 1.16-.607 1.552-1.07.428-.5.625-1.142.589-1.928-.036-.785-.321-1.427-.856-1.927-.536-.5-1.232-.892-2.088-1.177-.821-.322-1.767-.59-2.837-.803a135.581 135.581 0 01-3.266-.696 32.39 32.39 0 01-3.319-.91 11.194 11.194 0 01-2.837-1.446 6.86 6.86 0 01-1.98-2.302c-.5-.963-.75-2.14-.75-3.533 0-1.498.357-2.747 1.071-3.747a8.364 8.364 0 012.783-2.462 12.024 12.024 0 013.748-1.338 22.446 22.446 0 013.961-.375c1.427 0 2.783.16 4.068.482 1.321.285 2.498.767 3.533 1.445a8.174 8.174 0 012.623 2.676c.714 1.071 1.16 2.374 1.339 3.908h-6.371c-.285-1.463-.963-2.444-2.034-2.944-1.035-.5-2.23-.75-3.586-.75a13.6 13.6 0 00-1.553.108 6.672 6.672 0 00-1.659.428c-.5.178-.928.464-1.285.856-.357.357-.535.84-.535 1.446 0 .75.249 1.356.749 1.82.535.464 1.213.856 2.034 1.177.857.286 1.82.536 2.891.75 1.071.214 2.177.446 3.319.696a33.96 33.96 0 013.265.91c1.071.357 2.017.839 2.837 1.445a6.643 6.643 0 012.035 2.302c.535.928.803 2.07.803 3.426 0 1.642-.375 3.033-1.125 4.175a8.794 8.794 0 01-2.944 2.784c-1.177.714-2.498 1.231-3.961 1.552a20.18 20.18 0 01-4.336.482c-1.749 0-3.373-.196-4.871-.589-1.464-.392-2.748-.98-3.855-1.766a9.43 9.43 0 01-2.569-2.998c-.607-1.213-.928-2.64-.964-4.282h6.103zM165.462 1.779h6.103v14.185h.107c.749-1.249 1.855-2.284 3.319-3.104 1.498-.857 3.158-1.285 4.978-1.285 3.033 0 5.424.785 7.173 2.355 1.749 1.57 2.623 3.926 2.623 7.066V40h-6.102V22.602c-.072-2.177-.536-3.747-1.392-4.71-.857-1-2.195-1.5-4.015-1.5-1.035 0-1.963.197-2.784.59a5.626 5.626 0 00-2.087 1.552c-.571.642-1.017 1.41-1.339 2.302a8.316 8.316 0 00-.481 2.837V40h-6.103V1.779zM215.204 23.726a9.284 9.284 0 00-.642-2.783 6.518 6.518 0 00-1.392-2.302 6.051 6.051 0 00-2.141-1.606c-.821-.428-1.749-.642-2.784-.642-1.07 0-2.052.196-2.944.588a6.51 6.51 0 00-2.248 1.553 8 8 0 00-1.499 2.302 8.518 8.518 0 00-.589 2.89h14.239zm-14.239 4.015c0 1.07.143 2.106.428 3.105.321 1 .785 1.874 1.392 2.623.607.75 1.374 1.356 2.302 1.82.928.428 2.034.642 3.319.642 1.784 0 3.212-.374 4.282-1.124 1.107-.785 1.927-1.945 2.463-3.48h5.781c-.321 1.5-.874 2.838-1.659 4.016a11.943 11.943 0 01-2.838 2.997 12.079 12.079 0 01-3.747 1.767 14.135 14.135 0 01-4.282.642c-2.177 0-4.104-.357-5.782-1.07-1.677-.714-3.104-1.713-4.282-2.998-1.142-1.285-2.016-2.82-2.623-4.604-.571-1.784-.857-3.747-.857-5.888 0-1.963.304-3.819.91-5.567.643-1.785 1.535-3.337 2.677-4.658a12.92 12.92 0 014.229-3.212c1.642-.785 3.497-1.177 5.567-1.177 2.177 0 4.122.464 5.835 1.392 1.749.892 3.194 2.087 4.336 3.586 1.142 1.5 1.963 3.23 2.463 5.193.535 1.927.678 3.925.428 5.995h-20.342zM223.43 12.324h6.477l5.407 20.663h.107l5.193-20.663h6.156l4.978 20.663h.107l5.621-20.663h6.21L255.014 40h-6.264l-5.139-20.556h-.107L238.419 40h-6.424l-8.565-27.676z" fill="#000"/>
-            </svg>
+  <div id="root">
+    <div class="wrapper___YPV7U">
+      <div class="ant-layout">
+        
+        <!-- Header -->
+        <div class="header___1Rwnn ant-layout-header">
+          <div class="content___21YfC">
+            <div class="logoOffset___C7naQ"></div>
+            <div class="logoCont___a6vUu">
+              <div>
+                <!-- Logo SVG -->
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjY0IiBoZWlnaHQ9IjUyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNLjczNSAyNi4yMTJjMCAxNC4xOTQgMTEuNTA3IDI1LjcwMiAyNS43MDMgMjUuNzAyIDE0LjE5NCAwIDI1LjcwMi0xMS41MDggMjUuNzAyLTI1LjcwM0M1Mi4xNCAxMi4wMTggNDAuNjMyLjUxIDI2LjQzNy41MVMuNzM1IDEyLjAxNy43MzUgMjYuMjEyem0xNi4xMDguMTQ3Yy0xLjMyMy0xLjM5Ny0zLjg3Ny0xLjE1Ny0zLjc2Ny43NjQuNDI3IDcuNDQzIDYuODA4IDEzLjEzMSAxNC4yNTIgMTIuNzA0IDcuNDQzLS40MjcgMTMuMTMxLTYuODA3IDEyLjcwNC0xNC4yNTEtLjA3LTEuMjMzLTEuNzA1LTEuMzg0LTIuNDQ3LS4zOTdhMTMuNTYzIDEzLjU2MyAwIDAxLTEwLjA5IDUuNDA3IDEzLjU2MyAxMy41NjMgMCAwMS0xMC42NTItNC4yMjd6IiBmaWxsPSIjRUM1OTMxIi8+PHBhdGggZD0iTTk2Ljg5NSAyMS41ODVjLS4yNS0xLjcxMy0uOTQ2LTIuOTk4LTIuMDg4LTMuODU0LTEuMTA2LS44OTItMi41MTYtMS4zMzgtNC4yMjktMS4zMzgtLjc4NSAwLTEuNjI0LjE0Mi0yLjUxNi40MjgtLjg5Mi4yNS0xLjcxMy43NS0yLjQ2MiAxLjQ5OS0uNzUuNzEzLTEuMzc0IDEuNzMtMS44NzQgMy4wNTEtLjUgMS4yODUtLjc1IDIuOTgtLjc1IDUuMDg1IDAgMS4xNDMuMTI2IDIuMjg1LjM3NSAzLjQyNy4yODYgMS4xNDIuNzE0IDIuMTU5IDEuMjg1IDMuMDVhNy41MDkgNy41MDkgMCAwMDIuMzAyIDIuMTk2Yy45MjguNTM1IDIuMDUyLjgwMyAzLjM3Mi44MDMgMS43ODUgMCAzLjI0OC0uNTU0IDQuMzktMS42NiAxLjE3OC0xLjEwNiAxLjkxLTIuNjU5IDIuMTk1LTQuNjU3aDYuMTAyYy0uNTcxIDMuNjA0LTEuOTQ1IDYuMzctNC4xMjIgOC4yOTctMi4xNCAxLjg5Mi00Ljk5NiAyLjgzNy04LjU2NSAyLjgzNy0yLjE3NyAwLTQuMTA0LS4zNTctNS43ODEtMS4wNy0xLjY0Mi0uNzUtMy4wMzMtMS43NDktNC4xNzUtMi45OTgtMS4xNDItMS4yODUtMi4wMTctMi44MDEtMi42MjMtNC41NS0uNTcyLTEuNzQ5LS44NTctMy42NC0uODU3LTUuNjc1IDAtMi4wNy4yODUtNC4wMTQuODU3LTUuODM0LjU3LTEuODIgMS40MjctMy4zOSAyLjU2OS00LjcxMSAxLjE0Mi0xLjM1NiAyLjU1Mi0yLjQxIDQuMjI5LTMuMTU5IDEuNzEzLS43ODUgMy43MTItMS4xNzcgNS45OTYtMS4xNzcgMS42MDUgMCAzLjEyMi4yMTQgNC41NS42NDIgMS40NjMuMzkzIDIuNzQ4IDEgMy44NTQgMS44MmE5LjcwMSA5LjcwMSAwIDAxMi43ODQgMy4xMDVjLjcxMyAxLjI1IDEuMTQyIDIuNzMgMS4yODQgNC40NDNoLTYuMTAyek0xMzEuMTM3IDMzLjg0NGMwIC43NS4wODkgMS4yODUuMjY3IDEuNjA2LjIxNS4zMi42MDcuNDgxIDEuMTc4LjQ4MWguNjQyYy4yNSAwIC41MzYtLjAzNS44NTctLjEwNnY0LjIyOGMtLjIxNC4wNzItLjUuMTQzLS44NTcuMjE1LS4zMjEuMTA3LS42Ni4xOTYtMS4wMTcuMjY3YTExLjA2IDExLjA2IDAgMDEtMS45OC4yMTRjLTEuMjQ5IDAtMi4yODQtLjI1LTMuMTA1LS43NS0uODIxLS40OTktMS4zNTYtMS4zNzMtMS42MDYtMi42MjItMS4yMTMgMS4xNzctMi43MTIgMi4wMzQtNC40OTcgMi41Ny0xLjc0OC41MzUtMy40NDQuODAyLTUuMDg1LjgwMi0xLjI0OSAwLTIuNDQ1LS4xNzgtMy41ODctLjUzNWE5LjYzNSA5LjYzNSAwIDAxLTMuMDUxLTEuNDQ1IDcuOTY1IDcuOTY1IDAgMDEtMi4wODgtMi41MTZjLS40OTktMS4wMzUtLjc0OS0yLjIzLS43NDktMy41ODcgMC0xLjcxMy4zMDMtMy4xMDUuOTEtNC4xNzUuNjQyLTEuMDcxIDEuNDYzLTEuOTEgMi40NjItMi41MTZhMTAuOTggMTAuOTggMCAwMTMuNDI2LTEuMjg1IDM2LjE3IDM2LjE3IDAgMDEzLjg1NS0uNjQyIDI2LjYzMiAyNi42MzIgMCAwMTMuMTU4LS40MjljLjk5OS0uMTA3IDEuODczLS4yNjcgMi42MjMtLjQ4Mi43ODUtLjIxNCAxLjM5Mi0uNTM1IDEuODItLjk2My40NjQtLjQ2NC42OTYtMS4xNDIuNjk2LTIuMDM0IDAtLjc4NS0uMTk2LTEuNDI4LS41ODktMS45MjdhMy4zMDcgMy4zMDcgMCAwMC0xLjM5Mi0xLjEyNSA0LjkyMyA0LjkyMyAwIDAwLTEuODItLjUzNWMtLjY3OC0uMTA3LTEuMzItLjE2LTEuOTI3LS4xNi0xLjcxMyAwLTMuMTIzLjM1Ny00LjIyOSAxLjA3LTEuMTA2LjcxNC0xLjczMSAxLjgyLTEuODc0IDMuMzJoLTYuMTAyYy4xMDctMS43ODUuNTM1LTMuMjY2IDEuMjg1LTQuNDQ0YTguOTY5IDguOTY5IDAgMDEyLjgzNy0yLjgzN2MxLjE3OC0uNzE0IDIuNDk4LTEuMjEzIDMuOTYxLTEuNDk5YTIzLjQyNSAyMy40MjUgMCAwMTQuNDk3LS40MjhjMS4zNTYgMCAyLjY5NC4xNDMgNC4wMTUuNDI4IDEuMzIuMjg2IDIuNDk4Ljc1IDMuNTMzIDEuMzkyYTcuNTQgNy41NCAwIDAxMi41NjkgMi41MTZjLjY0MyAxIC45NjQgMi4yMy45NjQgMy42OTR2MTQuMjM5em0tNi4xMDMtNy43MDljLS45MjguNjA3LTIuMDcuOTgyLTMuNDI2IDEuMTI0YTM5LjY2MyAzOS42NjMgMCAwMC00LjA2OC41MzZjLS42NDMuMTA3LTEuMjY3LjI2Ny0xLjg3NC40ODFhNC44NTggNC44NTggMCAwMC0xLjYwNi44MDNjLS40NjQuMzIyLS44MzguNzY4LTEuMTI0IDEuMzM5LS4yNS41MzUtLjM3NSAxLjE5NS0uMzc1IDEuOTggMCAuNjc4LjE5NyAxLjI1LjU4OSAxLjcxMy4zOTMuNDY0Ljg1Ny44NCAxLjM5MiAxLjEyNS41NzEuMjUgMS4xNzguNDI4IDEuODIuNTM1LjY3OC4xMDcgMS4yODUuMTYgMS44Mi4xNi42NzggMCAxLjQxLS4wODkgMi4xOTUtLjI2N2E2Ljk3NyA2Ljk3NyAwIDAwMi4xOTUtLjkxIDUuODg2IDUuODg2IDAgMDAxLjc2Ni0xLjYwNmMuNDY0LS42NzguNjk2LTEuNDk5LjY5Ni0yLjQ2M3YtNC41NXpNMTQyLjMwNyAzMS4xMTRjLjE3OCAxLjc4NC44NTYgMy4wMzMgMi4wMzQgMy43NDdzMi41ODcgMS4wNyA0LjIyOSAxLjA3Yy41NzEgMCAxLjIxMy0uMDM1IDEuOTI3LS4xMDZhOS40MTggOS40MTggMCAwMDIuMDg4LS41MzZjLjY0Mi0uMjUgMS4xNi0uNjA3IDEuNTUyLTEuMDcuNDI4LS41LjYyNS0xLjE0Mi41ODktMS45MjgtLjAzNi0uNzg1LS4zMjEtMS40MjctLjg1Ni0xLjkyNy0uNTM2LS41LTEuMjMyLS44OTItMi4wODgtMS4xNzctLjgyMS0uMzIyLTEuNzY3LS41OS0yLjgzNy0uODAzYTEzNS41ODEgMTM1LjU4MSAwIDAxLTMuMjY2LS42OTYgMzIuMzkgMzIuMzkgMCAwMS0zLjMxOS0uOTEgMTEuMTk0IDExLjE5NCAwIDAxLTIuODM3LTEuNDQ2IDYuODYgNi44NiAwIDAxLTEuOTgtMi4zMDJjLS41LS45NjMtLjc1LTIuMTQtLjc1LTMuNTMzIDAtMS40OTguMzU3LTIuNzQ3IDEuMDcxLTMuNzQ3YTguMzY0IDguMzY0IDAgMDEyLjc4My0yLjQ2MiAxMi4wMjQgMTIuMDI0IDAgMDEzLjc0OC0xLjMzOCAyMi40NDYgMjIuNDQ2IDAgMDEzLjk2MS0uMzc1YzEuNDI3IDAgMi43ODMuMTYgNC4wNjguNDgyIDEuMzIxLjI4NSAyLjQ5OC43NjcgMy41MzMgMS40NDVhOC4xNzQgOC4xNzQgMCAwMTIuNjIzIDIuNjc2Yy43MTQgMS4wNzEgMS4xNiAyLjM3NCAxLjMzOSAzLjkwOGgtNi4zNzFjLS4yODUtMS40NjMtLjk2My0yLjQ0NC0yLjAzNC0yLjk0NC0xLjAzNS0uNS0yLjIzLS43NS0zLjU4Ni0uNzVhMTMuNiAxMy42IDAgMDAtMS41NTMuMTA4IDYuNjcyIDYuNjcyIDAgMDAtMS42NTkuNDI4Yy0uNS4xNzgtLjkyOC40NjQtMS4yODUuODU2LS4zNTcuMzU3LS41MzUuODQtLjUzNSAxLjQ0NiAwIC43NS4yNDkgMS4zNTYuNzQ5IDEuODIuNTM1LjQ2NCAxLjIxMy44NTYgMi4wMzQgMS4xNzcuODU3LjI4NiAxLjgyLjUzNiAyLjg5MS43NSAxLjA3MS4yMTQgMi4xNzcuNDQ2IDMuMzE5LjY5NmEzMy45NiAzMy45NiAwIDAxMy4yNjUuOTFjMS4wNzEuMzU3IDIuMDE3LjgzOSAyLjgzNyAxLjQ0NWE2LjY0MyA2LjY0MyAwIDAxMi4wMzUgMi4zMDJjLjUzNS45MjguODAzIDIuMDcuODAzIDMuNDI2IDAgMS42NDItLjM3NSAzLjAzMy0xLjEyNSA0LjE3NWE4Ljc5NCA4Ljc5NCAwIDAxLTIuOTQ0IDIuNzg0Yy0xLjE3Ny43MTQtMi40OTggMS4yMzEtMy45NjEgMS41NTJhMjAuMTggMjAuMTggMCAwMS00LjMzNi40ODJjLTEuNzQ5IDAtMy4zNzMtLjE5Ni00Ljg3MS0uNTg5LTEuNDY0LS4zOTItMi43NDgtLjk4LTMuODU1LTEuNzY2YTkuNDMgOS40MyAwIDAxLTIuNTY5LTIuOTk4Yy0uNjA3LTEuMjEzLS45MjgtMi42NC0uOTY0LTQuMjgyaDYuMTAzek0xNjUuNDYyIDEuNzc5aDYuMTAzdjE0LjE4NWguMTA3Yy43NDktMS4yNDkgMS44NTUtMi4yODQgMy4zMTktMy4xMDQgMS40OTgtLjg1NyAzLjE1OC0xLjI4NSA0Ljk3OC0xLjI4NSAzLjAzMyAwIDUuNDI0Ljc4NSA3LjE3MyAyLjM1NSAxLjc0OSAxLjU3IDIuNjIzIDMuOTI2IDIuNjIzIDcuMDY2VjQwaC02LjEwMlYyMi42MDJjLS4wNzItMi4xNzctLjUzNi0zLjc0Ny0xLjM5Mi00LjcxLS44NTctMS0yLjE5NS0xLjUtNC4wMTUtMS41LTEuMDM1IDAtMS45NjMuMTk3LTIuNzg0LjU5YTUuNjI2IDUuNjI2IDAgMDAtMi4wODcgMS41NTJjLS41NzEuNjQyLTEuMDE3IDEuNDEtMS4zMzkgMi4zMDJhOC4zMTYgOC4zMTYgMCAwMC0uNDgxIDIuODM3VjQwaC02LjEwM1YxLjc3OXpNMjE1LjIwNCAyMy43MjZhOS4yODQgOS4yODQgMCAwMC0uNjQyLTIuNzgzIDYuNTE4IDYuNTE4IDAgMDAtMS4zOTItMi4zMDIgNi4wNTEgNi4wNTEgMCAwMC0yLjE0MS0xLjYwNmMtLjgyMS0uNDI4LTEuNzQ5LS42NDItMi43ODQtLjY0Mi0xLjA3IDAtMi4wNTIuMTk2LTIuOTQ0LjU4OGE2LjUxIDYuNTEgMCAwMC0yLjI0OCAxLjU1MyA4IDggMCAwMC0xLjQ5OSAyLjMwMiA4LjUxOCA4LjUxOCAwIDAwLS41ODkgMi44OWgxNC4yMzl6bS0xNC4yMzkgNC4wMTVjMCAxLjA3LjE0MyAyLjEwNi40MjggMy4xMDUuMzIxIDEgLjc4NSAxLjg3NCAxLjM5MiAyLjYyMy42MDcuNzUgMS4zNzQgMS4zNTYgMi4zMDIgMS44Mi45MjguNDI4IDIuMDM0LjY0MiAzLjMxOS42NDIgMS43ODQgMCAzLjIxMi0uMzc0IDQuMjgyLTEuMTI0IDEuMTA3LS43ODUgMS45MjctMS45NDUgMi40NjMtMy40OGg1Ljc4MWMtLjMyMSAxLjUtLjg3NCAyLjgzOC0xLjY1OSA0LjAxNmExMS45NDMgMTEuOTQzIDAgMDEtMi44MzggMi45OTcgMTIuMDc5IDEyLjA3OSAwIDAxLTMuNzQ3IDEuNzY3IDE0LjEzNSAxNC4xMzUgMCAwMS00LjI4Mi42NDJjLTIuMTc3IDAtNC4xMDQtLjM1Ny01Ljc4Mi0xLjA3LTEuNjc3LS43MTQtMy4xMDQtMS43MTMtNC4yODItMi45OTgtMS4xNDItMS4yODUtMi4wMTYtMi44Mi0yLjYyMy00LjYwNC0uNTcxLTEuNzg0LS44NTctMy43NDctLjg1Ny01Ljg4OCAwLTEuOTYzLjMwNC0zLjgxOS45MS01LjU2Ny42NDMtMS43ODUgMS41MzUtMy4zMzcgMi42NzctNC42NThhMTIuOTIgMTIuOTIgMCAwMTQuMjI5LTMuMjEyYzEuNjQyLS43ODUgMy40OTctMS4xNzcgNS41NjctMS4xNzcgMi4xNzcgMCA0LjEyMi40NjQgNS44MzUgMS4zOTIgMS43NDkuODkyIDMuMTk0IDIuMDg3IDQuMzM2IDMuNTg2IDEuMTQyIDEuNSAxLjk2MyAzLjIzIDIuNDYzIDUuMTkzLjUzNSAxLjkyNy42NzggMy45MjUuNDI4IDUuOTk1aC0yMC4zNDJ6TTIyMy40MyAxMi4zMjRoNi40NzdsNS40MDcgMjAuNjYzaC4xMDdsNS4xOTMtMjAuNjYzaDYuMTU2bDQuOTc4IDIwLjY2M2guMTA3bDUuNjIxLTIwLjY2M2g2LjIxTDI1NS4wMTQgNDBoLTYuMjY0bC01LjEzOS0yMC41NTZoLS4xMDdMMjM4LjQxOSA0MGgtNi40MjRsLTguNTY1LTI3LjY3NnoiIGZpbGw9IiMwMDAiLz48L3N2Zz4=" class="logo___3lfGx" alt="Cashew Logo">
+              </div>
+            </div>
+            <div class="backCont___3v1Dd"></div>
+          </div>
         </div>
-    </header>
 
-    <main>
-        <div class="ticket-card">
-            <!-- Секция с изображением (QR или Фото) -->
-            <div class="qr-section">
-                <div class="qr-wrapper">
-                    <!-- Сюда подставляется твоя картинка -->
-                    <img id="qr-image" src="images/photo.png" alt="Билет" class="qr-image">
-                    
-                    <!-- Статус (Красный крестик) -->
-                    <div class="status-icon">
-                        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="64" cy="64" r="64" fill="#c93636"/>
-                            <path d="M100.3 90.4L73.9 64l26.3-26.4c.4-.4.4-1 0-1.4l-8.5-8.5c-.4-.4-1-.4-1.4 0L64 54.1 37.7 27.8c-.4-.4-1-.4-1.4 0l-8.5 8.5c-.4.4-.4 1 0 1.4L54 64 27.7 90.3c-.4.4-.4 1 0 1.4l8.5 8.5c.4.4 1.1.4 1.4 0L64 73.9l26.3 26.3c.4.4 1.1.4 1.5.1l8.5-8.5c.4-.4.4-1 0-1.4z" fill="#fff"/>
-                        </svg>
+        <!-- Content -->
+        <div class="content___11TYE ant-layout-content">
+          <div class="content___2Zzv5" style="max-width: 900px;">
+            <div class="form___1Pz19">
+              <div class="ant-row-flex">
+                
+                <!-- Left Column: QR Code -->
+                <div class="ant-col-xs-24 ant-col-md-24 ant-col-lg-12">
+                  <div class="qrCont___3gWPa">
+                    <div class="qrBlock___ngXsb">
+                      <div>
+                        <!-- Placeholder Canvas for QR -->
+                        <canvas height="300" width="300" style="height: 300px; width: 300px;"></canvas>
+                      </div>
+                      <!-- Cancel Icon (Hidden by default in CSS, visible if needed) -->
+                      <img class="cancel___1ZlPJ" src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2NCIgY3k9IjY0IiByPSI2NCIgZmlsbD0iI2M5MzYzNiIvPjxwYXRoIGQ9Ik0xMDAuMyA5MC40TDczLjkgNjRsMjYuMy0yNi40Yy40LS40LjQtMSAwLTEuNGwtOC41LTguNWMtLjQtLjQtMS0uNC0xLjQgMEw2NCA1NC4xIDM3LjcgMjcuOGMtLjQtLjQtMS0uNC0xLjQgMGwtOC41IDguNWMtLjQuNC0uNCAxIDAgMS40TDU0IDY0IDI3LjcgOTAuM2MtLjQuNC0uNCAxIDAgMS40bDguNSA4LjVjLjQuNCAxLjEuNCAxLjQgMEw2NCA3My45bDI2LjMgMjYuM2MuNC40IDEuMS40IDEuNS4xbDguNS04LjVjLjQtLjQuNC0xIDAtMS40eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="Cancel">
                     </div>
+                  </div>
                 </div>
+
+                <!-- Right Column: Ticket Info -->
+                <div class="ant-col-xs-24 ant-col-md-24 ant-col-lg-12">
+                  <div class="infoCont___2XI7s">
+                    <div class="infoBlock___1uMAp">
+                      <div>
+                        <h2 class="amountLabel___2dQrA">Получатель:</h2>
+                      </div>
+                      <h2 class="additionalInf___3nXOK">
+                        Оплата проезда в автобусе, гар. номер 11440<br>
+                        г. Барановичи<br>
+                        Открытое акционерное общество "Автобусный парк г.Барановичи"
+                      </h2>
+                      
+                      <div>
+                        <h2 class="amountLabel___2dQrA">Активен с:</h2>
+                      </div>
+                      <h2 class="amount___ZlVZj">30.08.2025 10:43</h2>
+                      
+                      <div>
+                        <h2 class="amountLabel___2dQrA">Активен до:</h2>
+                      </div>
+                      <h2 class="amount___ZlVZj">30.08.2025 11:43</h2>
+                      
+                      <div>
+                        <h2 class="descriptionLabel___2OmpC">Описание:</h2>
+                      </div>
+                      <h2 class="description___HgXmR">#54f43155fc08a05d#</h2>
+                      
+                      <div>
+                        <h2 class="amountLabel___2dQrA">Цена:</h2>
+                      </div>
+                      <h2 class="amount___ZlVZj">0.9 BYN</h2>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-
-            <!-- Секция с информацией -->
-            <div class="info-section">
-                <div class="info-row">
-                    <div class="info-label">Получатель:</div>
-                    <div id="recipient" class="info-value">Загрузка...</div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-label">Активен с:</div>
-                    <div id="active-from" class="info-value">--</div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-label">Активен до:</div>
-                    <div id="active-to" class="info-value">--</div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-label">Описание:</div>
-                    <div id="description" class="info-value">--</div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-label">Цена:</div>
-                    <div id="price" class="info-value price-value">--</div>
-                </div>
-            </div>
+          </div>
         </div>
-    </main>
 
-    <footer>
-        <div>Cashew</div>
-        <div><a href="mailto:info@cashew.me">info@cashew.me</a></div>
-    </footer>
+        <!-- Footer -->
+        <div class="footer___3-nlc ant-layout-footer">
+          <div class="container">
+            <div class="content___1Nmke">
+              <div class="ant-row">
+                <div class="infoBlock___Q4Fmd ant-col-xs-24 ant-col-md-24 ant-col-lg-24">
+                  Cashew<br>
+                  <a href="mailto:info@cashew.me" class="email___1juwC">info@cashew.me</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <script>
-        function getParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
+      </div>
+    </div>
+  </div>
 
-        function decode(text) {
-            if (!text) return "";
-            try {
-                return decodeURIComponent(text);
-            } catch (e) {
-                return text;
-            }
-        }
-
-        window.onload = function() {
-            const recipient = getParam('recipient');
-            const activeFrom = getParam('activeFrom');
-            const activeTo = getParam('activeTo');
-            const description = getParam('description');
-            const price = getParam('price');
-
-            if (recipient) document.getElementById('recipient').innerText = decode(recipient);
-            if (activeFrom) document.getElementById('active-from').innerText = decode(activeFrom);
-            if (activeTo) document.getElementById('active-to').innerText = decode(activeTo);
-            if (description) document.getElementById('description').innerText = decode(description);
-            if (price) document.getElementById('price').innerText = decode(price);
-            
-            // Если нужно динамически менять фото через параметр (опционально):
-            // const photoUrl = getParam('photoUrl');
-            // if(photoUrl) document.getElementById('qr-image').src = decode(photoUrl);
-        };
-    </script>
+  <!-- Scripts (Polyfill and App Logic placeholders) -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <!-- Note: index.js is omitted as it requires the specific build environment, 
+       but the visual structure is fully preserved. -->
+  
 </body>
 </html>
