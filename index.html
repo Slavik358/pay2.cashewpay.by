@@ -78,7 +78,7 @@
             justify-content: center;
             align-items: center;
             background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            
             padding: 10px;
             border-radius: 4px;
         }
@@ -288,7 +288,6 @@
         window.onload = function() {
             const recipient = getParam('recipient');
             const activeFrom = getParam('activeFrom');
-            const description = getParam('description');
             const price = getParam('price');
 
             if (recipient) document.getElementById('recipient').innerText = decode(recipient);
@@ -302,12 +301,12 @@
                 document.getElementById('active-to').innerText = calculatedEnd;
             }
 
-            if (description) document.getElementById('description').innerText = decode(description);
             if (price) document.getElementById('price').innerText = decode(price);
         };
     </script>
 </body>
 </html>
+
 
 
 
