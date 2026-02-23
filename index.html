@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cashew - Оплата проезда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto  :wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* Стили остаются без изменений */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,8 +34,8 @@
         }
 
         .logo-image { 
-            width: 100%; 
-            height: 100%; 
+            width: 60%; 
+            height: 60%; 
             object-fit: cover; /* Важно: заполняет область, обрезая лишнее, чтобы не было искажений */
         }
 
@@ -71,7 +71,7 @@
         <header>
             <div class="logo">
                  <img id="logo-image" src="images/logo.png" alt="Фото пользователя" class="logo-image">
-                <span class="logo-text">cashew</span>
+                <span class="logo-text"><u>cashew<u></span>
             </div>
         </header>
 
@@ -146,7 +146,7 @@
             
             /* 
             if (qrData) {
-                const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(decode(qrData));
+                const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=  " + encodeURIComponent(decode(qrData));
                 document.getElementById('qr-image').src = qrUrl;
             }
             */
@@ -154,4 +154,3 @@
     </script>
 </body>
 </html>
-
